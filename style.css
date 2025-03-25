@@ -22,60 +22,56 @@ header {
 }
 
 header img {
-   
     display: flex;
     justify-content: center; 
     align-items: center; 
     height: 165px;
     width: 293px;
-    
 }
 
-a{
+a {
     text-decoration: none;
     color: #2c2c2c;
     display: flex;
 }
 
+/* Estilização da barra de pesquisa */
 .search-bar {
     display: flex;
     align-items: center;
-    background-color: black; 
+    background-color: black;
     padding: 10px;
-    border-radius: 50px; 
+    border-radius: 50px;
     width: fit-content;
     margin: 20px auto;
 }
 
 .icon-container {
-    background-color: black; 
+    background-color: black;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
-    border-radius: 50%; 
+    padding: 12px;
+    border-radius: 50%;
+    width: 50px;  /* Mantém um tamanho fixo para o círculo */
+    height: 50px;
+    cursor: pointer;
+    border: none;
 }
 
 .icon-container img {
-    width: 30px; 
-    height: 30px;
+    width: 28px; /* Ajuste o tamanho da lupa conforme necessário */
+    height: 28px;
 }
 
 .search-bar input {
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 20px;
+    border-radius: 30px;
     outline: none;
-    font-size: 16px;
-    width: 290px;
-}
-
-.search-bar button {
-    background: white;
-    border: 1px solid #ccc;
-    padding: 8px;
-    cursor: pointer;
-    border-radius: 5px;
+    font-size: 18px;
+    width: 300px;
+    margin-left: 10px; /* Espaço entre a lupa e o input */
 }
 
 .container {
@@ -110,5 +106,3 @@ a{
 .card button:hover {
     background-color: #0056b3;
 }
-
-

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
     <title>Attack on Titan</title>
 </head>
 <body>
@@ -16,18 +16,42 @@
     </header>
     
     <div class="search-bar">
-        <div class="icon-container">
+        <input type="text" id="searchInput" placeholder="Pesquisar um personagem específico">
+        <button id="searchButton" class="icon-container">
             <img src="./lupa.png" alt="Lupa">
-        </div>
-        <input type="text" placeholder="Pesquisar um personagem específico">
+        </button>
     </div>    
 
     <main>
         <section class="container" id="container">
-
         </section>
     </main>
-</body>
-</html>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("searchInput");
+            const searchButton = document.getElementById("searchButton");
+
+            searchButton.addEventListener("click", function () {
+                const query = searchInput.value.trim().toLowerCase();
+                if (query) {
+                    searchCharacter(query);
+                }
+            });
+
+            function searchCharacter(query) {
+                const cards = document.querySelectorAll(".card");
+                cards.forEach(card => {
+                    const name = card.querySelector("h3").textContent.toLowerCase();
+                    if (name.includes(query)) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            }
+        });
+    </script>
+
 </body>
 </html>

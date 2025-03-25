@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async function () { 
     const humanUrl = "https://api.attackontitanapi.com/characters";
     const titanUrl = "https://api.attackontitanapi.com/titans";
 
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         try {
             const response = await fetch(url);
             const data = await response.json();
-            return data;
+            return data.results; // Corrigindo para acessar os personagens dentro de "results"
         } catch (error) {
             console.error("Erro ao buscar dados:", error);
             return [];
@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         card.innerHTML = `
             <img src="${character.img || 'placeholder.jpg'}" alt="${character.name}">
             <h3>${character.name}</h3>
-            <p><strong>Apelido:</strong> ${character.alias || "Não informado"}</p>
-            <p><strong>Espécie:</strong> ${character.species || "Desconhecida"}</p>
+            <p><strong>Apelido:</strong> ${character.alias ? character.alias.join(", ") : "Não informado"}</p>
+            <p><strong>Espécie:</strong> ${character.species ? character.species.join(", ") : "Desconhecida"}</p>
             <p><strong>Gênero:</strong> ${character.gender || "Desconhecido"}</p>
             <p><strong>Idade:</strong> ${character.age || "Desconhecida"}</p>
             <p><strong>Altura:</strong> ${character.height || "Não informada"}</p>
@@ -50,15 +50,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         const humans = await fetchData(humanUrl);
         const titans = await fetchData(titanUrl);
 
-        humans?.forEach((character) => {
+        humans.forEach((character) => {
             container.appendChild(createHumanCard(character));
         });
 
-        titans?.forEach((titan) => {
+        titans.forEach((titan) => {
             container.appendChild(createTitanCard(titan));
         });
     }
 
+    // Agora chamamos corretamente a função dentro do evento
     renderData();
 });
-
