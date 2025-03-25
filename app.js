@@ -2,10 +2,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const humanUrl = "https://api.attackontitanapi.com/characters";
     const titanUrl = "https://api.attackontitanapi.com/titans";
 
-    const humanosContainer = document.getElementById("humanos");
-    const titansContainer = document.getElementById("titans");
-    const detalheContainer = document.getElementById("detalhe");
-    const mainContainer = document.getElementById("main");
+    const container = document.getElementById("container");
 
     async function fetchData(url) {
         try {
@@ -14,57 +11,54 @@ document.addEventListener("DOMContentLoaded", async function () {
             return data;
         } catch (error) {
             console.error("Erro ao buscar dados:", error);
+            return [];
         }
     }
 
-    function createCard(personagem) {
+    function createHumanCard(character) {
         const card = document.createElement("div");
         card.classList.add("card");
 
         card.innerHTML = `
-            <img src="${personagem.image}" alt="${personagem.name}">
-            <h3>${personagem.name}</h3>
-            <button onclick="mostrarDetalhes('${personagem.image}', '${personagem.name}', '${personagem.age}', '${personagem.height}', '${personagem.gender}')">Ver mais</button>
+            <img src="${character.img || 'placeholder.jpg'}" alt="${character.name}">
+            <h3>${character.name}</h3>
+            <p><strong>Apelido:</strong> ${character.alias || "Não informado"}</p>
+            <p><strong>Espécie:</strong> ${character.species || "Desconhecida"}</p>
+            <p><strong>Gênero:</strong> ${character.gender || "Desconhecido"}</p>
+            <p><strong>Idade:</strong> ${character.age || "Desconhecida"}</p>
+            <p><strong>Altura:</strong> ${character.height || "Não informada"}</p>
         `;
 
         return card;
     }
 
-    window.mostrarDetalhes = function (imagem, nome, idade, altura, genero) {
-        mainContainer.style.display = "none"; // Esconde a lista principal
-        detalheContainer.innerHTML = `
-            <div class="detalhe-card">
-                <img src="${imagem}" alt="${nome}">
-                <div>
-                    <h2>${nome}</h2>
-                    <p><strong>Idade:</strong> ${idade || "Desconhecida"}</p>
-                    <p><strong>Altura:</strong> ${altura || "Desconhecida"}</p>
-                    <p><strong>Gênero:</strong> ${genero || "Desconhecido"}</p>
-                    <button onclick="voltarInicio()">Voltar ao início</button>
-                </div>
-            </div>
-        `;
-        detalheContainer.style.display = "block"; // Exibe os detalhes
-    };
+    function createTitanCard(titan) {
+        const card = document.createElement("div");
+        card.classList.add("card");
 
-    window.voltarInicio = function () {
-        detalheContainer.innerHTML = "";
-        detalheContainer.style.display = "none";
-        mainContainer.style.display = "block"; // Mostra a lista principal de novo
-    };
+        card.innerHTML = `
+            <img src="${titan.img || 'placeholder.jpg'}" alt="${titan.name}">
+            <h3>${titan.name}</h3>
+            <p><strong>Altura:</strong> ${titan.height || "Não informada"}</p>
+            <p><strong>Habilidades:</strong> ${titan.abilities ? titan.abilities.join(", ") : "Nenhuma listada"}</p>
+        `;
+
+        return card;
+    }
 
     async function renderData() {
-        const humanos = await fetchData(humanUrl);
+        const humans = await fetchData(humanUrl);
         const titans = await fetchData(titanUrl);
 
-        humanos?.forEach((personagem) => {
-            humanosContainer.appendChild(createCard(personagem));
+        humans?.forEach((character) => {
+            container.appendChild(createHumanCard(character));
         });
 
-        titans?.forEach((personagem) => {
-            titansContainer.appendChild(createCard(personagem));
+        titans?.forEach((titan) => {
+            container.appendChild(createTitanCard(titan));
         });
     }
 
     renderData();
 });
+
